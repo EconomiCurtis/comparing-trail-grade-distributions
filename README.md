@@ -73,4 +73,3 @@ Code (scripts, notebook): MIT, see `LICENSE`. The data keep their sources' licen
 - Elevation: [FABDEM v1-2](https://data.bris.ac.uk/data/dataset/s5hqmjcdj8yo2ibzi9b4ew3sn) (Hawker et al. 2022,
   University of Bristol), CC BY-NC-SA 4.0. The elevations and grades in `data/grades/` derive from it: non-commercial
   use, same license.
-- Grade zones: Footpath's slope bands (3, 7, 16, 25%) plus a break at 10%.
