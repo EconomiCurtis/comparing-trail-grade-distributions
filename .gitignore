@@ -1,0 +1,10 @@
+# FABDEM tiles (~25 MB each, several GB in all): re-downloaded by `make download`
+data/fabdem
+
+# Python, Quarto and OS files
+.venv
+__pycache__/
+notebook/*_files/
+.quarto/
+**/*.quarto_ipynb*
+.DS_Store

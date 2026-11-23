@@ -1,0 +1,190 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-11-19T21:40:36Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "relation",
+  "id": 1225378,
+  "members": [
+    {
+      "type": "node",
+      "ref": 948480238,
+      "role": "trailhead"
+    },
+    {
+      "type": "node",
+      "ref": 1040294835,
+      "role": "trailhead"
+    },
+    {
+      "type": "relation",
+      "ref": 1246902,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1246901,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1236787,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1238538,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1243366,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1243414,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1243679,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1244686,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1245492,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1246906,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1247934,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1249228,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1249245,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1251009,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1253065,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1253310,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1255154,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1255155,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1258061,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1260310,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1260388,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1260401,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1268073,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1268116,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1285294,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1285818,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1296807,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1304995,
+      "role": ""
+    },
+    {
+      "type": "relation",
+      "ref": 1322978,
+      "role": ""
+    }
+  ],
+  "tags": {
+    "from": "Campo, California",
+    "full_name": "Pacific Crest National Scenic Trail",
+    "name": "Pacific Crest Trail",
+    "network": "nwn",
+    "network:type": "US:NST",
+    "operator": "Pacific Crest Trail Association",
+    "operator:wikidata": "Q30288365",
+    "ref": "PCT",
+    "route": "hiking",
+    "to": "Manning Park, British Columbia",
+    "type": "superroute",
+    "website": "https://www.pcta.org/",
+    "website:map": "https://www.pcta.org/discover-the-trail/maps/",
+    "wikidata": "Q2003736",
+    "wikipedia": "en:Pacific Crest Trail"
+  }
+}
+
+  ]
+}

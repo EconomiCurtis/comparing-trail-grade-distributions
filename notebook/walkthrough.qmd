@@ -1,0 +1,185 @@
+---
+title: "Comparing Trail Grade Distributions: Walkthrough"
+format:
+  html:
+    embed-resources: true
+    toc: true
+    code-overflow: wrap
+execute:
+  warning: false
+jupyter: python3
+---
+
+The grade of a trail every 100 m, the same way for every trail: track, points, elevation, smoothing, grade. This notebook runs each step of `scripts/build_grades.py` on one trail (the Tour du Mont Blanc), then shows the results for every trail and how to add one.
+
+Running it needs the Tour du Mont Blanc's elevation tiles: `make download TRAILS=tmb` (about 100 MB).
+
+## Setup
+
+Settings and trails come from `trails.yaml`.
+
+```{python}
+import sys
+from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
+sys.path.insert(0, str(Path("../scripts").resolve()))
+import build_grades as bg
+import plots
+
+key = "tmb"
+trail = bg.CONFIG["trails"][key]
+spacing, k = bg.SETTINGS["spacing_m"], bg.SETTINGS["smooth_points"]
+trail, spacing, k
+```
+
+## 1. Track
+
+The trail's OpenStreetMap route relation (`data/osm/tmb/`). Only member ways with a main-route role (`keep_roles`) are kept; alternates, spurs, water and ferry legs are dropped. `join_pieces` merges ways that share end points. `orient_pieces` orders the pieces and points each one in the hiking direction: the order with the shortest total gap from `start`, through every piece, to `end`. A loop is then turned to its `loop` direction.
+
+```{python}
+ways = bg.load_ways(key)
+pieces = bg.orient_pieces(bg.join_pieces(ways), trail["start"], trail.get("loop"), trail.get("end"))
+km = sum(bg.step_m(p[:, 0], p[:, 1]).sum() for p in pieces) / 1000
+print(f"{len(ways)} ways -> {len(pieces)} piece(s), {km:.1f} km (published: {trail['official_km']} km)")
+
+fig, ax = plt.subplots(figsize=(5, 5))
+for p in pieces:
+    ax.plot(p[:, 0], p[:, 1], lw=1.2, color="#333")
+ax.plot(*pieces[0][0], "o", color="#0072B2", label="start")
+ax.set_aspect(1 / np.cos(np.radians(trail["start"][1])))
+ax.set(xlabel="Longitude", ylabel="Latitude")
+ax.legend(frameon=False)
+plt.show()
+```
+
+## 2. Points
+
+New points every `spacing_m` along each piece, distances on the WGS84 ellipsoid (`step_m`: meridian and prime-vertical radii of curvature). The track's own vertices are not used, so every trail is sampled the same way.
+
+```{python}
+dist, lon, lat = bg.resample(pieces[0], spacing)
+print(f"{len(dist)} points, {dist[1] - dist[0]:.0f} m apart")
+```
+
+## 3. Elevation
+
+FABDEM v1-2 at each point, bilinear between the four nearest 30 m cell centers (`fabdem`). Tiles are read from `data/fabdem/`.
+
+```{python}
+raw = bg.fabdem(lon, lat)
+print(f"{np.isnan(raw).sum()} points without elevation; range {np.nanmin(raw):.0f} to {np.nanmax(raw):.0f} m")
+```
+
+## 4. Smooth and 5. Grade
+
+Centered moving average over `smooth_points` points, then rise over run to the next point, in percent. The first and last points of a piece have no average and get no grade.
+
+```{python}
+elev = bg.smooth(raw, k)
+grade = np.diff(elev) / spacing * 100
+
+n = int((dist <= 15_000).sum())          # first 15 km
+fig, (top, bottom) = plt.subplots(2, 1, figsize=(8, 5), sharex=True, height_ratios=[3, 2])
+top.plot(dist[:n] / 1000, raw[:n], ".", ms=3, color="#888", label="FABDEM")
+top.plot(dist[:n] / 1000, elev[:n], color="#0072B2", lw=1.6, label=f"{k}-point average")
+top.set_ylabel("Elevation (m)")
+top.legend(frameon=False, loc="upper right")
+bottom.bar(dist[:n - 1] / 1000 + spacing / 2000, grade[:n - 1], width=spacing / 1000 * 0.9, color="#555")
+bottom.axhline(0, color="black", lw=0.6)
+bottom.set(xlabel="km from start", ylabel="Grade (%)")
+plt.tight_layout()
+plt.show()
+```
+
+## The whole trail, at every setting
+
+`build_trail` runs steps 1-5 for every spacing and smoothing in `settings.checks`. It returns the points at the main settings (written to `data/grades/<trail>.csv.gz`) and one summary row per setting (`data/grades/summary.csv`).
+
+```{python}
+points, rows = bg.build_trail(key)
+summary = pd.DataFrame(rows).set_index(["spacing_m", "smooth_points"])
+summary[["km_graded", "median_abs_grade", "pct_within_5", "pct_within_10", "pct_over_15", "pct_over_20"]]
+```
+
+Columns: `pct_within_10` is the % of distance between -10% and 10% grade; `pct_over_15` is steeper than 15%, up or down.
+
+## Every trail
+
+The grades already built, at the main settings (100 m, 3-point average):
+
+```{python}
+s = pd.read_csv("../data/grades/summary.csv")
+main = s[(s.spacing_m == spacing) & (s.smooth_points == k)]
+cols = ["name", "track_km", "official_km", "pct_within_5", "pct_within_10", "pct_over_10", "pct_over_15", "pct_over_20"]
+main[cols].sort_values("pct_within_10", ascending=False).set_index("name")
+```
+
+The figures from `scripts/plots.py` (`make figures` writes them to `figures/`). Grade density, the first trail as a gray fill:
+
+```{python}
+data = plots.load()
+fig, ax = plt.subplots(figsize=(9, 4.5))
+plots.density(ax, {t: data[t] for t in ["pct", "at", "tmb", "camino_frances"]})
+plt.show()
+```
+
+Share of distance in each grade zone:
+
+```{python}
+fig, ax = plt.subplots(figsize=(9, 0.45 * len(data) + 1.5))
+plots.zone_bars(ax, data)
+plt.show()
+```
+
+Grade by elevation (darker: more of the trail; black lines: 10th and 90th percentile grade per 500 ft):
+
+```{python}
+y_max = np.ceil(max(data[t].elev_m.max() for t in ["pct", "tmb"]) * plots.FT / 1000) * 1000
+fig, axes = plt.subplots(1, 2, figsize=(10, 4), sharey=True)
+for ax, t in zip(axes, ["pct", "tmb"]):
+    plots.heatmap(ax, data[t], y_max)
+    ax.set(title=plots.name(t), xlabel="Grade (%)")
+axes[0].set_ylabel("Elevation (ft)")
+plt.show()
+```
+
+## Adding a trail
+
+**From OpenStreetMap.** Find the trail's route relation on [Waymarked Trails](https://hiking.waymarkedtrails.org) or [openstreetmap.org](https://www.openstreetmap.org), and add it to `trails.yaml`:
+
+```yaml
+  my_trail:
+    name: My Trail
+    region: United States
+    long_name: My Trail
+    direction: NoBo
+    osm_relation: 1234567          # or a list, for a trail split over several relations
+    official_km: 500
+    start: [-120.0, 38.0]          # where hikers usually start: sets the sign of grade
+    end: [-119.0, 41.0]            # optional, helps order the pieces
+```
+
+**From your own track.** Put a GPX or GeoJSON file in `data/tracks/` and use `track_file` instead of `osm_relation`. `start` is optional (default: the file's first point).
+
+```yaml
+  my_hike:
+    name: My Hike
+    region: United States
+    long_name: My Hike
+    direction: SoBo
+    track_file: data/tracks/my_hike.gpx
+    official_km: null
+```
+
+Then:
+
+```bash
+make download grades TRAILS=my_trail    # track (OSM only) and elevation tiles, then grades
+make figures
+```
+
+Check the printed track length against the published one, and the piece count: many pieces or a long track usually means alternates mapped as main route (leave them out with `skip_relations`).

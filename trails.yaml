@@ -1,0 +1,171 @@
+# Trails and settings for the grade comparison. Every trail goes through exactly the same steps
+# (scripts/build_grades.py). To add a trail: add an entry, then `make download grades TRAILS=<key>`.
+#
+# Per trail:
+#   name           short label for plots and tables
+#   long_name      full name for the text
+#   region         for grouping in the table
+#   track_file     instead of osm_relation: your own GPX or GeoJSON track, path from the repo root
+#   osm_relation   OpenStreetMap route relation id (a parent "superroute" of section relations is fine), or a
+#                  list of them for a trail split across several
+#                  Find one at https://hiking.waymarkedtrails.org or https://www.openstreetmap.org.
+#   official_km    published length, used only to check the mapped track's length (null: none published)
+#   direction      the usual hiking direction, as a label (NoBo, SoBo, Westbound, Clockwise...)
+#   start          [lon, lat] where hikers usually begin. Grades are signed in that direction: uphill positive.
+#   end            [lon, lat] where they usually finish (optional; helps put a trail's pieces in order)
+#   skip_relations section relations to leave out (alternates mapped as main route)
+#   loop           for a loop trail, the usual direction: clockwise or counterclockwise (start is then any point on it)
+
+trails:
+  pct:
+    name: PCT
+    region: United States
+    long_name: Pacific Crest Trail
+    osm_relation: 1225378
+    official_km: 4265          # 2,650 mi (PCTA)
+    start: [-116.467, 32.590]  # Campo, Mexican border; northbound
+    direction: NoBo
+    end: [-120.800, 49.000]  # Canadian border, Manning Park
+  at:
+    name: AT
+    region: United States
+    long_name: Appalachian Trail
+    osm_relation: 156553
+    official_km: 3536          # 2,197 mi (ATC)
+    start: [-84.194, 34.627]   # Springer Mountain; northbound
+    direction: NoBo
+    end: [-68.921, 45.904]   # Katahdin
+  cdt:
+    name: CDT
+    region: United States
+    long_name: Continental Divide Trail
+    osm_relation: 921198
+    official_km: 4989          # 3,100 mi
+    start: [-108.206, 31.498]  # Crazy Cook, Mexican border; northbound
+    direction: NoBo
+    end: [-113.910, 49.000]  # Canadian border, Waterton Lake
+  annapurna:
+    name: Annapurna Circuit
+    region: Nepal
+    long_name: Annapurna Circuit
+    osm_relation: 1187310
+    official_km: null          # treks vary; the mapped route is Besisahar - Thorong La - Jomsom - Ghorepani - Birethanti
+    start: [84.380, 28.230]    # Besisahar; counterclockwise around the Annapurnas, over Thorong La
+    direction: Counter-Clockwise
+    end: [83.789, 28.300]    # Birethanti
+  jmt:
+    name: JMT
+    region: United States
+    long_name: John Muir Trail
+    osm_relation: 1244828
+    official_km: 340           # 211 mi
+    start: [-119.558, 37.732]  # Happy Isles, Yosemite Valley; southbound to Mount Whitney
+    direction: SoBo
+    end: [-118.292, 36.579]  # Mount Whitney
+  ct:
+    name: Colorado Trail
+    region: United States
+    long_name: Colorado Trail
+    osm_relation: 3445384      # Collegiate East (Collegiate West is an alternative and is left out)
+    official_km: 782           # 486 mi (Colorado Trail Foundation, Collegiate East)
+    start: [-105.094, 39.490]  # Waterton Canyon, Denver; to Durango
+    direction: SoBo
+    end: [-107.905, 37.336]  # Junction Creek, Durango
+  azt:
+    name: AZT
+    region: United States
+    long_name: Arizona Trail
+    osm_relation: 2804113
+    official_km: 1287          # 800 mi (Arizona Trail Association)
+    start: [-110.251, 31.333]  # Coronado National Memorial, Mexican border; northbound
+    direction: NoBo
+    end: [-112.040, 37.000]  # Utah border
+  pnt:
+    name: PNT
+    region: United States
+    long_name: Pacific Northwest Trail
+    osm_relation: 11225405
+    official_km: 1931          # 1,200 mi (Pacific Northwest Trail Association)
+    start: [-113.660, 48.996]  # Chief Mountain, Glacier National Park; westbound to the Pacific
+    direction: Westbound
+    end: [-124.733, 48.165]  # Cape Alava, Pacific coast
+  wonderland:
+    name: Wonderland Trail
+    region: United States
+    long_name: Wonderland Trail
+    osm_relation: 4111743
+    official_km: 150           # 93 mi (National Park Service)
+    start: [-121.811, 46.750]  # Longmire
+    direction: Clockwise
+    loop: clockwise
+  tmb:
+    name: Tour du Mont Blanc
+    region: Alps
+    long_name: Tour du Mont Blanc
+    osm_relation: 124456       # the main loop; its variants are alternatives and are left out
+    official_km: 165           # about 165-170 km, depending on variants
+    start: [6.800, 45.890]     # Les Houches
+    direction: Counter-Clockwise
+    loop: counterclockwise
+  via_alpina_red:
+    name: Via Alpina Red
+    region: Alps
+    long_name: Via Alpina Red Trail
+    osm_relation: 1665395      # the original Red Trail's 161 stages (Via Alpina merged its trails into one in 2024)
+    official_km: null          # published figures for the old Red Trail disagree (1,700-2,400 km)
+    start: [13.766, 45.605]    # Muggia, Trieste; to Monaco
+    direction: Westbound
+    end: [7.420, 43.731]     # Monaco
+  via_alpina_green:
+    name: Via Alpina Green
+    region: Alps
+    long_name: Via Alpina Green Trail
+    osm_relation: 12579662
+    official_km: null          # published figures for the old Green Trail disagree
+    start: [9.521, 47.141]     # Vaduz; westbound
+    direction: Westbound
+
+  te_araroa:
+    name: Te Araroa
+    region: New Zealand
+    long_name: Te Araroa
+    osm_relation: [8518624, 8518626]   # North Island and South Island superroutes (there's no single one)
+    skip_relations: [19535237] # the Rakaia River hazard bypass, a road alternate
+    official_km: 3000          # about 3,000 km (Te Araroa Trust)
+    start: [172.680, -34.428]  # Cape Reinga
+    direction: SoBo
+    end: [168.362, -46.614]    # Stirling Point, Bluff
+
+  camino_frances:
+    name: Camino de Santiago
+    region: Spain
+    long_name: Camino de Santiago (Camino Francés)
+    osm_relation: 2163573      # Camino Francés; its alternative is left out
+    official_km: 780           # about 780 km (published figures run 760-800)
+    start: [-1.235, 43.163]    # Saint-Jean-Pied-de-Port
+    direction: Westbound
+    end: [-8.544, 42.880]      # Santiago de Compostela
+
+  # Your own track instead of OpenStreetMap (GPX tracks/routes, or GeoJSON LineString/MultiLineString):
+  # my_trail:
+  #   name: My Trail
+  #   region: United States
+  #   long_name: My Trail
+  #   direction: NoBo
+  #   track_file: data/tracks/my_trail.gpx
+  #   official_km: null
+  #   start: [-120.0, 40.0]    # optional for a track file: defaults to its first point
+
+# How grade is measured. The main settings make the figures and tables; checks re-run every trail with
+# other settings to show the comparison doesn't hinge on them.
+settings:
+  spacing_m: 100               # a point every this many meters along the track, measured on the WGS84 ellipsoid
+  smooth_points: 3             # centered moving average of elevation over this many points (1: no smoothing)
+  checks:
+    spacing_m: [50, 100, 200]
+    smooth_points: [1, 3, 5]
+  keep_roles: ["", forward, backward, route, main]   # OSM member roles on the main route (not alternatives)
+
+# Grade zones, in percent: Footpath's slope bands (3, 7, 16, 25) plus a break at 10. The same edges serve
+# uphill and downhill.
+zones: [3, 7, 10, 16, 25]
