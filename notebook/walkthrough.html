@@ -2260,7 +2260,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <p>Settings and trails come from <code>trails.yaml</code>.</p>
-<div id="1440427b" class="cell" data-execution_count="1">
+<div id="17fae2b0" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2271,11 +2271,23 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="bu">str</span>(Path(<span class="st">&quot;../scripts&quot;</span>).resolve()))</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> build_grades <span class="im">as</span> bg</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plots</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>key <span class="op">=</span> <span class="st">&quot;tmb&quot;</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>trail <span class="op">=</span> bg.CONFIG[<span class="st">&quot;trails&quot;</span>][key]</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>spacing, k <span class="op">=</span> bg.SETTINGS[<span class="st">&quot;spacing_m&quot;</span>], bg.SETTINGS[<span class="st">&quot;smooth_points&quot;</span>]</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>trail, spacing, k</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, loc, style</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>TEXT_FONT <span class="op">=</span> [<span class="st">&quot;Futura&quot;</span>, <span class="st">&quot;Futura PT&quot;</span>, <span class="st">&quot;Jost&quot;</span>, <span class="st">&quot;Century Gothic&quot;</span>, <span class="st">&quot;sans-serif&quot;</span>]</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>NUM_FONT <span class="op">=</span> <span class="st">&quot;ui-monospace, SFMono-Regular, Menlo, Consolas, monospace&quot;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> table(df, title, decimals<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Great Tables: sans-serif text, monospace numbers.&quot;&quot;&quot;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    nums <span class="op">=</span> <span class="bu">list</span>(df.select_dtypes(<span class="st">&quot;number&quot;</span>).columns)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (GT(df).tab_header(title<span class="op">=</span>title).fmt_number(columns<span class="op">=</span>nums, decimals<span class="op">=</span>decimals)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            .opt_table_font(font<span class="op">=</span>TEXT_FONT, add<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>            .tab_style(style<span class="op">=</span>style.text(font<span class="op">=</span>NUM_FONT), locations<span class="op">=</span>loc.body(columns<span class="op">=</span>nums)))</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>key <span class="op">=</span> <span class="st">&quot;tmb&quot;</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>trail <span class="op">=</span> bg.CONFIG[<span class="st">&quot;trails&quot;</span>][key]</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>spacing, k <span class="op">=</span> bg.SETTINGS[<span class="st">&quot;spacing_m&quot;</span>], bg.SETTINGS[<span class="st">&quot;smooth_points&quot;</span>]</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>trail, spacing, k</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>({&#39;name&#39;: &#39;Tour du Mont Blanc&#39;,
   &#39;region&#39;: &#39;Alps&#39;,
@@ -2293,7 +2305,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <section id="track" class="level2">
 <h2 class="anchored" data-anchor-id="track">1. Track</h2>
 <p>The trail’s OpenStreetMap route relation (<code>data/osm/tmb/</code>). Only member ways with a main-route role (<code>keep_roles</code>) are kept; alternates, spurs, water and ferry legs are dropped. <code>join_pieces</code> merges ways that share end points. <code>orient_pieces</code> orders the pieces and points each one in the hiking direction: the order with the shortest total gap from <code>start</code>, through every piece, to <code>end</code>. A loop is then turned to its <code>loop</code> direction.</p>
-<div id="3891cddc" class="cell" data-execution_count="2">
+<div id="a186650f" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ways <span class="op">=</span> bg.load_ways(key)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pieces <span class="op">=</span> bg.orient_pieces(bg.join_pieces(ways), trail[<span class="st">&quot;start&quot;</span>], trail.get(<span class="st">&quot;loop&quot;</span>), trail.get(<span class="st">&quot;end&quot;</span>))</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>km <span class="op">=</span> <span class="bu">sum</span>(bg.step_m(p[:, <span class="dv">0</span>], p[:, <span class="dv">1</span>]).<span class="bu">sum</span>() <span class="cf">for</span> p <span class="kw">in</span> pieces) <span class="op">/</span> <span class="dv">1000</span></span>
@@ -2322,7 +2334,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <section id="points" class="level2">
 <h2 class="anchored" data-anchor-id="points">2. Points</h2>
 <p>New points every <code>spacing_m</code> along each piece, distances on the WGS84 ellipsoid (<code>step_m</code>: meridian and prime-vertical radii of curvature). The track’s own vertices are not used, so every trail is sampled the same way.</p>
-<div id="812a4d6c" class="cell" data-execution_count="3">
+<div id="1c13a9ed" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dist, lon, lat <span class="op">=</span> bg.resample(pieces[<span class="dv">0</span>], spacing)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span><span class="bu">len</span>(dist)<span class="sc">}</span><span class="ss"> points, </span><span class="sc">{</span>dist[<span class="dv">1</span>] <span class="op">-</span> dist[<span class="dv">0</span>]<span class="sc">:.0f}</span><span class="ss"> m apart&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -2333,7 +2345,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <section id="elevation" class="level2">
 <h2 class="anchored" data-anchor-id="elevation">3. Elevation</h2>
 <p>FABDEM v1-2 at each point, bilinear between the four nearest 30 m cell centers (<code>fabdem</code>). Tiles are read from <code>data/fabdem/</code>.</p>
-<div id="0dce7140" class="cell" data-execution_count="4">
+<div id="efc29cdc" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>raw <span class="op">=</span> bg.fabdem(lon, lat)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>np<span class="sc">.</span>isnan(raw)<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss"> points without elevation; range </span><span class="sc">{</span>np<span class="sc">.</span>nanmin(raw)<span class="sc">:.0f}</span><span class="ss"> to </span><span class="sc">{</span>np<span class="sc">.</span>nanmax(raw)<span class="sc">:.0f}</span><span class="ss"> m&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -2344,7 +2356,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <section id="smooth-and-5.-grade" class="level2">
 <h2 class="anchored" data-anchor-id="smooth-and-5.-grade">4. Smooth and 5. Grade</h2>
 <p>Centered moving average over <code>smooth_points</code> points, then rise over run to the next point, in percent. The first and last points of a piece have no average and get no grade.</p>
-<div id="890f8597" class="cell" data-execution_count="5">
+<div id="d3d99a85" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>elev <span class="op">=</span> bg.smooth(raw, k)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>grade <span class="op">=</span> np.diff(elev) <span class="op">/</span> spacing <span class="op">*</span> <span class="dv">100</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2371,127 +2383,187 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <section id="the-whole-trail-at-every-setting" class="level2">
 <h2 class="anchored" data-anchor-id="the-whole-trail-at-every-setting">The whole trail, at every setting</h2>
 <p><code>build_trail</code> runs steps 1-5 for every spacing and smoothing in <code>settings.checks</code>. It returns the points at the main settings (written to <code>data/grades/&lt;trail&gt;.csv.gz</code>) and one summary row per setting (<code>data/grades/summary.csv</code>).</p>
-<div id="fcf067d9" class="cell" data-execution_count="6">
+<div id="8e060556" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>points, rows <span class="op">=</span> bg.build_trail(key)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>summary <span class="op">=</span> pd.DataFrame(rows).set_index([<span class="st">&quot;spacing_m&quot;</span>, <span class="st">&quot;smooth_points&quot;</span>])</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>summary[[<span class="st">&quot;km_graded&quot;</span>, <span class="st">&quot;median_abs_grade&quot;</span>, <span class="st">&quot;pct_within_5&quot;</span>, <span class="st">&quot;pct_within_10&quot;</span>, <span class="st">&quot;pct_over_15&quot;</span>, <span class="st">&quot;pct_over_20&quot;</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>summary <span class="op">=</span> pd.DataFrame(rows)[[<span class="st">&quot;spacing_m&quot;</span>, <span class="st">&quot;smooth_points&quot;</span>, <span class="st">&quot;km_graded&quot;</span>, <span class="st">&quot;median_abs_grade&quot;</span>, <span class="st">&quot;pct_within_5&quot;</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;pct_within_10&quot;</span>, <span class="st">&quot;pct_over_15&quot;</span>, <span class="st">&quot;pct_over_20&quot;</span>]]</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>table(summary, <span class="ss">f&quot;</span><span class="sc">{</span>trail[<span class="st">&#39;name&#39;</span>]<span class="sc">}</span><span class="ss"> at every setting&quot;</span>).fmt_number(columns<span class="op">=</span>[<span class="st">&quot;spacing_m&quot;</span>, <span class="st">&quot;smooth_points&quot;</span>], decimals<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Tour du Mont Blanc: 1 pieces, 166 km</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="6">
-<div>
+<div id="xlwpwhoqzo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>
+#xlwpwhoqzo table {
+font-family: Futura, 'Futura PT', Jost, 'Century Gothic', sans-serif;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+#xlwpwhoqzo thead, #xlwpwhoqzo tbody, #xlwpwhoqzo tfoot, #xlwpwhoqzo tr, #xlwpwhoqzo td, #xlwpwhoqzo th { border-style: none; }
+#xlwpwhoqzo tr { background-color: transparent; }
+#xlwpwhoqzo p { margin: 0; padding: 0; }
+#xlwpwhoqzo .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+#xlwpwhoqzo .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+#xlwpwhoqzo .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+#xlwpwhoqzo .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+#xlwpwhoqzo .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+#xlwpwhoqzo .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+#xlwpwhoqzo .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+#xlwpwhoqzo .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 6px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+#xlwpwhoqzo .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+#xlwpwhoqzo .gt_column_spanner_outer:first-child { padding-left: 0; }
+#xlwpwhoqzo .gt_column_spanner_outer:last-child { padding-right: 0; }
+#xlwpwhoqzo .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+#xlwpwhoqzo .gt_spanner_row { border-bottom-style: hidden; }
+#xlwpwhoqzo .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+#xlwpwhoqzo .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+#xlwpwhoqzo .gt_from_md> :first-child { margin-top: 0; }
+#xlwpwhoqzo .gt_from_md> :last-child { margin-bottom: 0; }
+#xlwpwhoqzo .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+#xlwpwhoqzo .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+#xlwpwhoqzo .gt_indent_1 { text-indent: 5px; }
+#xlwpwhoqzo .gt_indent_2 { text-indent: calc(5px * 2); }
+#xlwpwhoqzo .gt_indent_3 { text-indent: calc(5px * 3); }
+#xlwpwhoqzo .gt_indent_4 { text-indent: calc(5px * 4); }
+#xlwpwhoqzo .gt_indent_5 { text-indent: calc(5px * 5); }
+#xlwpwhoqzo .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+#xlwpwhoqzo .gt_row_group_first td { border-top-width: 2px; }
+#xlwpwhoqzo .gt_row_group_first th { border-top-width: 2px; }
+#xlwpwhoqzo .gt_striped { color: #333333; background-color: #F4F4F4; }
+#xlwpwhoqzo .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+#xlwpwhoqzo .gt_summary_row { color: #333333; background-color: #FFFFFF; text-transform: inherit; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; }
+#xlwpwhoqzo .gt_first_summary_row { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; }
+#xlwpwhoqzo .gt_last_summary_row_top { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+#xlwpwhoqzo .gt_grand_summary_row { color: #333333; background-color: #FFFFFF; text-transform: inherit; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; }
+#xlwpwhoqzo .gt_first_grand_summary_row_bottom { border-top-style: double; border-top-width: 6px; border-top-color: #D3D3D3; }
+#xlwpwhoqzo .gt_last_grand_summary_row_top { border-bottom-style: double; border-bottom-width: 6px; border-bottom-color: #D3D3D3; }
+#xlwpwhoqzo .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+#xlwpwhoqzo .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+#xlwpwhoqzo .gt_left { text-align: left; }
+#xlwpwhoqzo .gt_center { text-align: center; }
+#xlwpwhoqzo .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+#xlwpwhoqzo .gt_font_normal { font-weight: normal; }
+#xlwpwhoqzo .gt_font_bold { font-weight: bold; }
+#xlwpwhoqzo .gt_font_italic { font-style: italic; }
+#xlwpwhoqzo .gt_super { font-size: 65%; }
+#xlwpwhoqzo .gt_footnotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+#xlwpwhoqzo .gt_footnote { margin: 0px; font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; }
+#xlwpwhoqzo .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+#xlwpwhoqzo .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+#xlwpwhoqzo .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+#xlwpwhoqzo .gt_asterisk { font-size: 100%; vertical-align: 0; }
+</style>
 
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<table class="gt_table caption-top table table-sm table-striped small" aria-labelledby="title" data-quarto-bootstrap="false">
 <thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">km_graded</th>
-<th data-quarto-table-cell-role="th">median_abs_grade</th>
-<th data-quarto-table-cell-role="th">pct_within_5</th>
-<th data-quarto-table-cell-role="th">pct_within_10</th>
-<th data-quarto-table-cell-role="th">pct_over_15</th>
-<th data-quarto-table-cell-role="th">pct_over_20</th>
+<tr class="gt_heading header">
+<td colspan="8" id="title" class="gt_heading gt_title gt_font_normal">Tour du Mont Blanc at every setting</td>
 </tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">spacing_m</th>
-<th data-quarto-table-cell-role="th">smooth_points</th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
+<tr class="gt_col_headings even">
+<th id="spacing_m" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">spacing_m</th>
+<th id="smooth_points" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">smooth_points</th>
+<th id="km_graded" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">km_graded</th>
+<th id="median_abs_grade" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">median_abs_grade</th>
+<th id="pct_within_5" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">pct_within_5</th>
+<th id="pct_within_10" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">pct_within_10</th>
+<th id="pct_over_15" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">pct_over_15</th>
+<th id="pct_over_20" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">pct_over_20</th>
 </tr>
 </thead>
-<tbody>
+<tbody class="gt_table_body">
 <tr class="odd">
-<th rowspan="3" data-quarto-table-cell-role="th" data-valign="top">50</th>
-<th data-quarto-table-cell-role="th">1</th>
-<td>166.2</td>
-<td>11.45</td>
-<td>24.6</td>
-<td>44.4</td>
-<td>36.4</td>
-<td>20.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="spacing_m">50</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="smooth_points">1</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="km_graded">166.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="median_abs_grade">11.4</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">24.6</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">44.4</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">36.4</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">20.2</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">3</th>
-<td>166.1</td>
-<td>10.95</td>
-<td>25.0</td>
-<td>46.1</td>
-<td>33.3</td>
-<td>17.1</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="spacing_m">50</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="smooth_points">3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="km_graded">166.1</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="median_abs_grade">10.9</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">25.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">46.1</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">33.3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">17.1</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">5</th>
-<td>166.0</td>
-<td>10.77</td>
-<td>25.4</td>
-<td>46.5</td>
-<td>32.2</td>
-<td>15.1</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="spacing_m">50</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="smooth_points">5</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="km_graded">166.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="median_abs_grade">10.8</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">25.4</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">46.5</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">32.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">15.1</td>
 </tr>
 <tr class="even">
-<th rowspan="3" data-quarto-table-cell-role="th" data-valign="top">100</th>
-<th data-quarto-table-cell-role="th">1</th>
-<td>166.2</td>
-<td>11.24</td>
-<td>25.0</td>
-<td>44.3</td>
-<td>33.8</td>
-<td>18.1</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="spacing_m">100</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="smooth_points">1</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="km_graded">166.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="median_abs_grade">11.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">25.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">44.3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">33.8</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">18.1</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">3</th>
-<td>166.0</td>
-<td>10.70</td>
-<td>25.6</td>
-<td>47.1</td>
-<td>32.3</td>
-<td>14.6</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="spacing_m">100</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="smooth_points">3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="km_graded">166.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="median_abs_grade">10.7</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">25.6</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">47.1</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">32.3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">14.6</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">5</th>
-<td>165.8</td>
-<td>10.35</td>
-<td>25.8</td>
-<td>48.4</td>
-<td>30.6</td>
-<td>12.7</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="spacing_m">100</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="smooth_points">5</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="km_graded">165.8</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="median_abs_grade">10.3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">25.8</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">48.4</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">30.6</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">12.7</td>
 </tr>
 <tr class="odd">
-<th rowspan="3" data-quarto-table-cell-role="th" data-valign="top">200</th>
-<th data-quarto-table-cell-role="th">1</th>
-<td>166.2</td>
-<td>10.60</td>
-<td>25.0</td>
-<td>47.4</td>
-<td>33.5</td>
-<td>15.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="spacing_m">200</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="smooth_points">1</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="km_graded">166.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="median_abs_grade">10.6</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">25.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">47.4</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">33.5</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">15.2</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">3</th>
-<td>165.8</td>
-<td>10.21</td>
-<td>25.8</td>
-<td>49.3</td>
-<td>29.7</td>
-<td>12.4</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="spacing_m">200</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="smooth_points">3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="km_graded">165.8</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="median_abs_grade">10.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">25.8</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">49.3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">29.7</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">12.4</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">5</th>
-<td>165.4</td>
-<td>9.76</td>
-<td>26.2</td>
-<td>51.0</td>
-<td>27.7</td>
-<td>10.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="spacing_m">200</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="smooth_points">5</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="km_graded">165.4</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="median_abs_grade">9.8</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">26.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">51.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">27.7</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">10.2</td>
 </tr>
 </tbody>
 </table>
+
 
 </div>
 </div>
@@ -2501,187 +2573,240 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <section id="every-trail" class="level2">
 <h2 class="anchored" data-anchor-id="every-trail">Every trail</h2>
 <p>The grades already built, at the main settings (100 m, 3-point average):</p>
-<div id="03c7f74d" class="cell" data-execution_count="7">
+<div id="d35f8df1" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> pd.read_csv(<span class="st">&quot;../data/grades/summary.csv&quot;</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>main <span class="op">=</span> s[(s.spacing_m <span class="op">==</span> spacing) <span class="op">&amp;</span> (s.smooth_points <span class="op">==</span> k)]</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> [<span class="st">&quot;name&quot;</span>, <span class="st">&quot;track_km&quot;</span>, <span class="st">&quot;official_km&quot;</span>, <span class="st">&quot;pct_within_5&quot;</span>, <span class="st">&quot;pct_within_10&quot;</span>, <span class="st">&quot;pct_over_10&quot;</span>, <span class="st">&quot;pct_over_15&quot;</span>, <span class="st">&quot;pct_over_20&quot;</span>]</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>main[cols].sort_values(<span class="st">&quot;pct_within_10&quot;</span>, ascending<span class="op">=</span><span class="va">False</span>).set_index(<span class="st">&quot;name&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>table(main[cols].sort_values(<span class="st">&quot;pct_within_10&quot;</span>, ascending<span class="op">=</span><span class="va">False</span>), <span class="st">&quot;Every trail, 100 m, 3-point average&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
-<div>
+<div id="kkkiyfnfqp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>
+#kkkiyfnfqp table {
+font-family: Futura, 'Futura PT', Jost, 'Century Gothic', sans-serif;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+#kkkiyfnfqp thead, #kkkiyfnfqp tbody, #kkkiyfnfqp tfoot, #kkkiyfnfqp tr, #kkkiyfnfqp td, #kkkiyfnfqp th { border-style: none; }
+#kkkiyfnfqp tr { background-color: transparent; }
+#kkkiyfnfqp p { margin: 0; padding: 0; }
+#kkkiyfnfqp .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+#kkkiyfnfqp .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+#kkkiyfnfqp .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+#kkkiyfnfqp .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+#kkkiyfnfqp .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+#kkkiyfnfqp .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+#kkkiyfnfqp .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+#kkkiyfnfqp .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 6px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+#kkkiyfnfqp .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+#kkkiyfnfqp .gt_column_spanner_outer:first-child { padding-left: 0; }
+#kkkiyfnfqp .gt_column_spanner_outer:last-child { padding-right: 0; }
+#kkkiyfnfqp .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+#kkkiyfnfqp .gt_spanner_row { border-bottom-style: hidden; }
+#kkkiyfnfqp .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+#kkkiyfnfqp .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+#kkkiyfnfqp .gt_from_md> :first-child { margin-top: 0; }
+#kkkiyfnfqp .gt_from_md> :last-child { margin-bottom: 0; }
+#kkkiyfnfqp .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+#kkkiyfnfqp .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+#kkkiyfnfqp .gt_indent_1 { text-indent: 5px; }
+#kkkiyfnfqp .gt_indent_2 { text-indent: calc(5px * 2); }
+#kkkiyfnfqp .gt_indent_3 { text-indent: calc(5px * 3); }
+#kkkiyfnfqp .gt_indent_4 { text-indent: calc(5px * 4); }
+#kkkiyfnfqp .gt_indent_5 { text-indent: calc(5px * 5); }
+#kkkiyfnfqp .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+#kkkiyfnfqp .gt_row_group_first td { border-top-width: 2px; }
+#kkkiyfnfqp .gt_row_group_first th { border-top-width: 2px; }
+#kkkiyfnfqp .gt_striped { color: #333333; background-color: #F4F4F4; }
+#kkkiyfnfqp .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+#kkkiyfnfqp .gt_summary_row { color: #333333; background-color: #FFFFFF; text-transform: inherit; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; }
+#kkkiyfnfqp .gt_first_summary_row { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; }
+#kkkiyfnfqp .gt_last_summary_row_top { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+#kkkiyfnfqp .gt_grand_summary_row { color: #333333; background-color: #FFFFFF; text-transform: inherit; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; }
+#kkkiyfnfqp .gt_first_grand_summary_row_bottom { border-top-style: double; border-top-width: 6px; border-top-color: #D3D3D3; }
+#kkkiyfnfqp .gt_last_grand_summary_row_top { border-bottom-style: double; border-bottom-width: 6px; border-bottom-color: #D3D3D3; }
+#kkkiyfnfqp .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+#kkkiyfnfqp .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+#kkkiyfnfqp .gt_left { text-align: left; }
+#kkkiyfnfqp .gt_center { text-align: center; }
+#kkkiyfnfqp .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+#kkkiyfnfqp .gt_font_normal { font-weight: normal; }
+#kkkiyfnfqp .gt_font_bold { font-weight: bold; }
+#kkkiyfnfqp .gt_font_italic { font-style: italic; }
+#kkkiyfnfqp .gt_super { font-size: 65%; }
+#kkkiyfnfqp .gt_footnotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+#kkkiyfnfqp .gt_footnote { margin: 0px; font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; }
+#kkkiyfnfqp .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+#kkkiyfnfqp .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+#kkkiyfnfqp .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+#kkkiyfnfqp .gt_asterisk { font-size: 100%; vertical-align: 0; }
+</style>
 
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<table class="gt_table caption-top table table-sm table-striped small" aria-labelledby="title" data-quarto-bootstrap="false">
 <thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">track_km</th>
-<th data-quarto-table-cell-role="th">official_km</th>
-<th data-quarto-table-cell-role="th">pct_within_5</th>
-<th data-quarto-table-cell-role="th">pct_within_10</th>
-<th data-quarto-table-cell-role="th">pct_over_10</th>
-<th data-quarto-table-cell-role="th">pct_over_15</th>
-<th data-quarto-table-cell-role="th">pct_over_20</th>
+<tr class="gt_heading header">
+<td colspan="8" id="title" class="gt_heading gt_title gt_font_normal">Every trail, 100 m, 3-point average</td>
 </tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">name</th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
+<tr class="gt_col_headings even">
+<th id="name" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">name</th>
+<th id="track_km" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">track_km</th>
+<th id="official_km" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">official_km</th>
+<th id="pct_within_5" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">pct_within_5</th>
+<th id="pct_within_10" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">pct_within_10</th>
+<th id="pct_over_10" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">pct_over_10</th>
+<th id="pct_over_15" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">pct_over_15</th>
+<th id="pct_over_20" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">pct_over_20</th>
 </tr>
 </thead>
-<tbody>
+<tbody class="gt_table_body">
 <tr class="odd">
-<th data-quarto-table-cell-role="th">Camino de Santiago</th>
-<td>769.4</td>
-<td>780.0</td>
-<td>80.6</td>
-<td>95.4</td>
-<td>4.6</td>
-<td>1.0</td>
-<td>0.1</td>
+<td class="gt_row gt_left" headers="name">Camino de Santiago</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="track_km">769.4</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="official_km">780.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">80.6</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">95.4</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_10">4.6</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">1.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">0.1</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">Te Araroa</th>
-<td>3179.6</td>
-<td>3000.0</td>
-<td>73.8</td>
-<td>89.3</td>
-<td>10.7</td>
-<td>5.5</td>
-<td>2.9</td>
+<td class="gt_row gt_left" headers="name">Te Araroa</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="track_km">3,179.6</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="official_km">3,000.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">73.8</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">89.3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_10">10.7</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">5.5</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">2.9</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">AZT</th>
-<td>1254.5</td>
-<td>1287.0</td>
-<td>67.6</td>
-<td>88.8</td>
-<td>11.2</td>
-<td>3.8</td>
-<td>1.0</td>
+<td class="gt_row gt_left" headers="name">AZT</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="track_km">1,254.5</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="official_km">1,287.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">67.6</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">88.8</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_10">11.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">3.8</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">1.0</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">CDT</th>
-<td>4832.7</td>
-<td>4989.0</td>
-<td>59.5</td>
-<td>84.7</td>
-<td>15.3</td>
-<td>4.2</td>
-<td>0.8</td>
+<td class="gt_row gt_left" headers="name">CDT</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="track_km">4,832.7</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="official_km">4,989.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">59.5</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">84.7</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_10">15.3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">4.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">0.8</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">PCT</th>
-<td>4219.2</td>
-<td>4265.0</td>
-<td>48.7</td>
-<td>84.5</td>
-<td>15.5</td>
-<td>2.3</td>
-<td>0.2</td>
+<td class="gt_row gt_left" headers="name">PCT</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="track_km">4,219.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="official_km">4,265.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">48.7</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">84.5</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_10">15.5</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">2.3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">0.2</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">Colorado Trail</th>
-<td>768.3</td>
-<td>782.0</td>
-<td>45.1</td>
-<td>81.1</td>
-<td>18.9</td>
-<td>5.2</td>
-<td>0.9</td>
+<td class="gt_row gt_left" headers="name">Colorado Trail</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="track_km">768.3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="official_km">782.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">45.1</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">81.1</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_10">18.9</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">5.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">0.9</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">PNT</th>
-<td>1964.6</td>
-<td>1931.0</td>
-<td>53.3</td>
-<td>79.7</td>
-<td>20.3</td>
-<td>7.2</td>
-<td>2.4</td>
+<td class="gt_row gt_left" headers="name">PNT</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="track_km">1,964.6</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="official_km">1,931.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">53.3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">79.7</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_10">20.3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">7.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">2.4</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">AT</th>
-<td>3394.4</td>
-<td>3536.0</td>
-<td>44.1</td>
-<td>72.1</td>
-<td>27.9</td>
-<td>10.4</td>
-<td>3.3</td>
+<td class="gt_row gt_left" headers="name">AT</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="track_km">3,394.4</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="official_km">3,536.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">44.1</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">72.1</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_10">27.9</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">10.4</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">3.3</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">JMT</th>
-<td>335.8</td>
-<td>340.0</td>
-<td>39.8</td>
-<td>71.7</td>
-<td>28.3</td>
-<td>6.8</td>
-<td>0.8</td>
+<td class="gt_row gt_left" headers="name">JMT</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="track_km">335.8</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="official_km">340.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">39.8</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">71.7</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_10">28.3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">6.8</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">0.8</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">Annapurna Circuit</th>
-<td>224.7</td>
-<td>NaN</td>
-<td>42.9</td>
-<td>68.1</td>
-<td>31.9</td>
-<td>15.5</td>
-<td>7.6</td>
+<td class="gt_row gt_left" headers="name">Annapurna Circuit</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="track_km">224.7</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="official_km">None</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">42.9</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">68.1</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_10">31.9</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">15.5</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">7.6</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">Via Alpina Red</th>
-<td>2565.0</td>
-<td>NaN</td>
-<td>29.7</td>
-<td>52.7</td>
-<td>47.3</td>
-<td>28.3</td>
-<td>15.1</td>
+<td class="gt_row gt_left" headers="name">Via Alpina Red</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="track_km">2,565.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="official_km">None</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">29.7</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">52.7</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_10">47.3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">28.3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">15.1</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">Via Alpina Green</th>
-<td>394.9</td>
-<td>NaN</td>
-<td>28.7</td>
-<td>50.3</td>
-<td>49.7</td>
-<td>28.7</td>
-<td>14.7</td>
+<td class="gt_row gt_left" headers="name">Via Alpina Green</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="track_km">394.9</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="official_km">None</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">28.7</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">50.3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_10">49.7</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">28.7</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">14.7</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">Wonderland Trail</th>
-<td>139.2</td>
-<td>150.0</td>
-<td>24.7</td>
-<td>49.8</td>
-<td>50.2</td>
-<td>24.3</td>
-<td>6.8</td>
+<td class="gt_row gt_left" headers="name">Wonderland Trail</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="track_km">139.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="official_km">150.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">24.7</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">49.8</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_10">50.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">24.3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">6.8</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">Tour du Mont Blanc</th>
-<td>166.2</td>
-<td>165.0</td>
-<td>25.6</td>
-<td>47.1</td>
-<td>52.9</td>
-<td>32.3</td>
-<td>14.6</td>
+<td class="gt_row gt_left" headers="name">Tour du Mont Blanc</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="track_km">166.2</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="official_km">165.0</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_5">25.6</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_within_10">47.1</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_10">52.9</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_15">32.3</td>
+<td class="gt_row gt_right" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" headers="pct_over_20">14.6</td>
 </tr>
 </tbody>
 </table>
+
 
 </div>
 </div>
 </div>
 <p>The figures from <code>scripts/plots.py</code> (<code>make figures</code> writes them to <code>figures/</code>). Grade density, the first trail as a gray fill:</p>
-<div id="18e456bb" class="cell" data-execution_count="8">
+<div id="da170f2d" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> plots.load()</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">4.5</span>))</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>plots.density(ax, {t: data[t] <span class="cf">for</span> t <span class="kw">in</span> [<span class="st">&quot;pct&quot;</span>, <span class="st">&quot;at&quot;</span>, <span class="st">&quot;tmb&quot;</span>, <span class="st">&quot;camino_frances&quot;</span>]})</span>
@@ -2695,7 +2820,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 </div>
 </div>
 <p>Share of distance in each grade zone:</p>
-<div id="564f6aec" class="cell" data-execution_count="9">
+<div id="564bb68e" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">0.45</span> <span class="op">*</span> <span class="bu">len</span>(data) <span class="op">+</span> <span class="fl">1.5</span>))</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>plots.zone_bars(ax, data)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2708,7 +2833,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 </div>
 </div>
 <p>Grade by elevation (darker: more of the trail; black lines: 10th and 90th percentile grade per 500 ft):</p>
-<div id="cf675b32" class="cell" data-execution_count="10">
+<div id="bc399fc7" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>y_max <span class="op">=</span> np.ceil(<span class="bu">max</span>(data[t].elev_m.<span class="bu">max</span>() <span class="cf">for</span> t <span class="kw">in</span> [<span class="st">&quot;pct&quot;</span>, <span class="st">&quot;tmb&quot;</span>]) <span class="op">*</span> plots.FT <span class="op">/</span> <span class="dv">1000</span>) <span class="op">*</span> <span class="dv">1000</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, t <span class="kw">in</span> <span class="bu">zip</span>(axes, [<span class="st">&quot;pct&quot;</span>, <span class="st">&quot;tmb&quot;</span>]):</span>

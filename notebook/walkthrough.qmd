@@ -29,6 +29,18 @@ import pandas as pd
 sys.path.insert(0, str(Path("../scripts").resolve()))
 import build_grades as bg
 import plots
+from great_tables import GT, loc, style
+
+TEXT_FONT = ["Futura", "Futura PT", "Jost", "Century Gothic", "sans-serif"]
+NUM_FONT = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+
+
+def table(df, title, decimals=1):
+    """Great Tables: sans-serif text, monospace numbers."""
+    nums = list(df.select_dtypes("number").columns)
+    return (GT(df).tab_header(title=title).fmt_number(columns=nums, decimals=decimals)
+            .opt_table_font(font=TEXT_FONT, add=False)
+            .tab_style(style=style.text(font=NUM_FONT), locations=loc.body(columns=nums)))
 
 key = "tmb"
 trail = bg.CONFIG["trails"][key]
@@ -101,8 +113,9 @@ plt.show()
 
 ```{python}
 points, rows = bg.build_trail(key)
-summary = pd.DataFrame(rows).set_index(["spacing_m", "smooth_points"])
-summary[["km_graded", "median_abs_grade", "pct_within_5", "pct_within_10", "pct_over_15", "pct_over_20"]]
+summary = pd.DataFrame(rows)[["spacing_m", "smooth_points", "km_graded", "median_abs_grade", "pct_within_5",
+                              "pct_within_10", "pct_over_15", "pct_over_20"]]
+table(summary, f"{trail['name']} at every setting").fmt_number(columns=["spacing_m", "smooth_points"], decimals=0)
 ```
 
 Columns: `pct_within_10` is the % of distance between -10% and 10% grade; `pct_over_15` is steeper than 15%, up or down.
@@ -115,7 +128,7 @@ The grades already built, at the main settings (100 m, 3-point average):
 s = pd.read_csv("../data/grades/summary.csv")
 main = s[(s.spacing_m == spacing) & (s.smooth_points == k)]
 cols = ["name", "track_km", "official_km", "pct_within_5", "pct_within_10", "pct_over_10", "pct_over_15", "pct_over_20"]
-main[cols].sort_values("pct_within_10", ascending=False).set_index("name")
+table(main[cols].sort_values("pct_within_10", ascending=False), "Every trail, 100 m, 3-point average")
 ```
 
 The figures from `scripts/plots.py` (`make figures` writes them to `figures/`). Grade density, the first trail as a gray fill:

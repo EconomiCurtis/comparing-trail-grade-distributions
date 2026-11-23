@@ -227,7 +227,6 @@ def summarize(grade, spacing, k, track_km, official_km):
         "pct_over_10": round(100 * float(np.mean(a > 10)), 1),
         "pct_over_15": round(100 * float(np.mean(a > 15)), 1),
         "pct_over_20": round(100 * float(np.mean(a > 20)), 1),
-        "p95_abs_grade": round(float(np.percentile(a, 95)), 1),
     }
 
 
