@@ -1,7 +1,7 @@
 # Comparing Trail Grade Distributions
 
 Trail grade every 100 m along long-distance hiking trails, computed the same way for every trail: OpenStreetMap
-tracks (or your own GPX/GeoJSON), FABDEM bare-earth elevation, a 3-point moving average, rise over run. Fourteen
+tracks (or your own GPX/GeoJSON), FABDEM bare-earth elevation, a 3-point moving average, rise over run. Twenty-one
 trails are included; adding one is a few lines in `trails.yaml`.
 
 Write-up: [How Hard Is the Trail Going to Be?](https://economicurtis.com) (link to come).
@@ -21,8 +21,10 @@ Write-up: [How Hard Is the Trail Going to Be?](https://economicurtis.com) (link 
 | `data/fabdem/` | FABDEM tiles, downloaded by `make download` (not in the repo: ~25 MB each, 4 GB in all) |
 | `figures/` | Output of `scripts/plots.py` |
 
-The trails: PCT, AT, CDT, JMT, Colorado Trail, Arizona Trail, Pacific Northwest Trail, Wonderland Trail, Tour du Mont
-Blanc, Via Alpina Red and Green, Annapurna Circuit, Te Araroa, Camino de Santiago (Camino Francés).
+The trails: PCT, AT, CDT, Great Divide Trail, JMT, Colorado Trail, Arizona Trail, Pacific Northwest Trail, Wonderland
+Trail, Tahoe Rim Trail, Tour du Mont Blanc, Via Alpina Red and Green, Fra li Monti (GR20), Haute Randonnée Pyrénéenne
+(HRP), Pyrenean Way (GR10), Senda Pirenaica (GR11), Annapurna Circuit, Te Araroa, Australian Alps Walking Track,
+Camino de Santiago (Camino Francés).
 
 ## Run
 

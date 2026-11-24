@@ -167,7 +167,7 @@ plt.show()
 ```yaml
   my_trail:
     name: My Trail
-    region: United States
+    region: Americas
     long_name: My Trail
     direction: NoBo
     osm_relation: 1234567          # or a list, for a trail split over several relations
@@ -181,7 +181,7 @@ plt.show()
 ```yaml
   my_hike:
     name: My Hike
-    region: United States
+    region: Americas
     long_name: My Hike
     direction: SoBo
     track_file: data/tracks/my_hike.gpx

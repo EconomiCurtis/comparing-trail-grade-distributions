@@ -19,7 +19,7 @@
 trails:
   pct:
     name: PCT
-    region: United States
+    region: Americas
     long_name: Pacific Crest Trail
     osm_relation: 1225378
     official_km: 4265          # 2,650 mi (PCTA)
@@ -28,7 +28,7 @@ trails:
     end: [-120.800, 49.000]  # Canadian border, Manning Park
   at:
     name: AT
-    region: United States
+    region: Americas
     long_name: Appalachian Trail
     osm_relation: 156553
     official_km: 3536          # 2,197 mi (ATC)
@@ -37,13 +37,23 @@ trails:
     end: [-68.921, 45.904]   # Katahdin
   cdt:
     name: CDT
-    region: United States
+    region: Americas
     long_name: Continental Divide Trail
     osm_relation: 921198
     official_km: 4989          # 3,100 mi
     start: [-108.206, 31.498]  # Crazy Cook, Mexican border; northbound
     direction: NoBo
     end: [-113.910, 49.000]  # Canadian border, Waterton Lake
+  gdt:
+    name: GDT
+    region: Americas
+    long_name: Great Divide Trail
+    osm_relation: 8139599      # superroute of sections A-G
+    official_km: 1130          # about 1,130 km (Great Divide Trail Association)
+    start: [-113.914, 49.000]  # Waterton, US border; northbound
+    direction: NoBo
+    end: [-120.184, 54.010]    # Kakwa Lake
+
   annapurna:
     name: Annapurna Circuit
     region: Nepal
@@ -55,7 +65,7 @@ trails:
     end: [83.789, 28.300]    # Birethanti
   jmt:
     name: JMT
-    region: United States
+    region: Americas
     long_name: John Muir Trail
     osm_relation: 1244828
     official_km: 340           # 211 mi
@@ -64,7 +74,7 @@ trails:
     end: [-118.292, 36.579]  # Mount Whitney
   ct:
     name: Colorado Trail
-    region: United States
+    region: Americas
     long_name: Colorado Trail
     osm_relation: 3445384      # Collegiate East (Collegiate West is an alternative and is left out)
     official_km: 782           # 486 mi (Colorado Trail Foundation, Collegiate East)
@@ -73,7 +83,7 @@ trails:
     end: [-107.905, 37.336]  # Junction Creek, Durango
   azt:
     name: AZT
-    region: United States
+    region: Americas
     long_name: Arizona Trail
     osm_relation: 2804113
     official_km: 1287          # 800 mi (Arizona Trail Association)
@@ -82,7 +92,7 @@ trails:
     end: [-112.040, 37.000]  # Utah border
   pnt:
     name: PNT
-    region: United States
+    region: Americas
     long_name: Pacific Northwest Trail
     osm_relation: 11225405
     official_km: 1931          # 1,200 mi (Pacific Northwest Trail Association)
@@ -91,16 +101,25 @@ trails:
     end: [-124.733, 48.165]  # Cape Alava, Pacific coast
   wonderland:
     name: Wonderland Trail
-    region: United States
+    region: Americas
     long_name: Wonderland Trail
     osm_relation: 4111743
     official_km: 150           # 93 mi (National Park Service)
     start: [-121.811, 46.750]  # Longmire
     direction: Clockwise
     loop: clockwise
+  trt:
+    name: Tahoe Rim Trail
+    region: Americas
+    long_name: Tahoe Rim Trail
+    osm_relation: 3094865
+    official_km: 266           # 165 mi (Tahoe Rim Trail Association)
+    start: [-120.146, 39.166]  # Tahoe City
+    direction: Clockwise
+    loop: clockwise
   tmb:
     name: Tour du Mont Blanc
-    region: Alps
+    region: Europe
     long_name: Tour du Mont Blanc
     osm_relation: 124456       # the main loop; its variants are alternatives and are left out
     official_km: 165           # about 165-170 km, depending on variants
@@ -109,7 +128,7 @@ trails:
     loop: counterclockwise
   via_alpina_red:
     name: Via Alpina Red
-    region: Alps
+    region: Europe
     long_name: Via Alpina Red Trail
     osm_relation: 1665395      # the original Red Trail's 161 stages (Via Alpina merged its trails into one in 2024)
     official_km: null          # published figures for the old Red Trail disagree (1,700-2,400 km)
@@ -118,16 +137,55 @@ trails:
     end: [7.420, 43.731]     # Monaco
   via_alpina_green:
     name: Via Alpina Green
-    region: Alps
+    region: Europe
     long_name: Via Alpina Green Trail
     osm_relation: 12579662
     official_km: null          # published figures for the old Green Trail disagree
     start: [9.521, 47.141]     # Vaduz; westbound
     direction: Westbound
 
+  hrp:
+    name: HRP
+    region: Europe
+    long_name: Haute Randonnée Pyrénéenne
+    osm_relation: 8386002      # "HRP Principale": the 41 main stages (the variants are separate relations, left out)
+    official_km: 800           # about 800 km (published figures vary with the route taken)
+    start: [-1.762, 43.372]    # Hendaye, Atlantic; eastbound
+    direction: Eastbound
+    end: [3.130, 42.483]       # Banyuls-sur-Mer, Mediterranean
+
+  gr10:
+    name: Pyrenean Way (GR10)
+    region: Europe
+    long_name: Pyrenean Way (GR10)
+    osm_relation: [7411271, 7411270, 7411269, 7411268, 7411267, 7411266, 7411265, 7411264, 548457]   # its 9 sections (no parent route)
+    official_km: 866           # about 866 km
+    start: [-1.762, 43.372]    # Hendaye, Atlantic; eastbound
+    direction: Eastbound
+    end: [3.130, 42.483]       # Banyuls-sur-Mer, Mediterranean
+  gr11:
+    name: Senda Pirenaica (GR11)
+    region: Europe
+    long_name: Senda Pirenaica (GR11)
+    osm_relation: [8865914, 10605305]   # the superroute, plus stage E36 (Elizondo - Bera), which it leaves out
+    official_km: 840           # about 840 km
+    start: [-1.794, 43.393]    # Cabo Higuer, Hondarribia, Atlantic; eastbound
+    direction: Eastbound
+    end: [3.322, 42.319]       # Cap de Creus, Mediterranean
+
+  gr20:
+    name: Fra li Monti (GR20)
+    region: Europe
+    long_name: Fra li Monti (GR20), Corsica
+    osm_relation: 12484370     # GR 20 Principale, the main route (the superroute 101692 also holds the variants)
+    official_km: 180           # about 180 km (FFRandonnée)
+    start: [8.855, 42.508]     # Calenzana; north to south
+    direction: SoBo
+    end: [9.346, 41.735]       # Conca
+
   te_araroa:
     name: Te Araroa
-    region: New Zealand
+    region: Australia & New Zealand
     long_name: Te Araroa
     osm_relation: [8518624, 8518626]   # North Island and South Island superroutes (there's no single one)
     skip_relations: [19535237] # the Rakaia River hazard bypass, a road alternate
@@ -136,9 +194,19 @@ trails:
     direction: SoBo
     end: [168.362, -46.614]    # Stirling Point, Bluff
 
+  aawt:
+    name: Australian Alps
+    region: Australia & New Zealand
+    long_name: Australian Alps Walking Track
+    osm_relation: 1644959
+    official_km: 655           # about 655 km (published figures run 600-700)
+    start: [146.441, -37.978]  # Walhalla, Victoria; to the ACT
+    direction: Northbound
+    end: [149.068, -35.497]    # Tharwa, ACT
+
   camino_frances:
     name: Camino de Santiago
-    region: Spain
+    region: Europe
     long_name: Camino de Santiago (Camino Francés)
     osm_relation: 2163573      # Camino Francés; its alternative is left out
     official_km: 780           # about 780 km (published figures run 760-800)
@@ -149,7 +217,7 @@ trails:
   # Your own track instead of OpenStreetMap (GPX tracks/routes, or GeoJSON LineString/MultiLineString):
   # my_trail:
   #   name: My Trail
-  #   region: United States
+  #   region: Americas
   #   long_name: My Trail
   #   direction: NoBo
   #   track_file: data/tracks/my_trail.gpx
